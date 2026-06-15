@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+# Node
+node_modules/
+npm-debug.log*
+# 발행 산출물(로컬 테스트 시 생성) — Pages 아티팩트로만 배포, 추적 안 함
+public/weather.json

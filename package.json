@@ -1,0 +1,12 @@
+{
+  "name": "ordinary-garden-data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "보통의 정원 — 기상청·에어코리아 → weather.json 발행기 (좌표 비공개)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test",
+    "publish": "node src/publish.js"
+  }
+}
