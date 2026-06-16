@@ -1,0 +1,48 @@
+name: Publish weather
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # 10분마다 (GitHub 스케줄은 수 분 지연/스킵 가능 — 신선도 표기로 흡수)
+  workflow_dispatch:          # 수동/미래 강제 새로고침 훅 (v1 앱 연동은 아직 안 함)
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish-weather
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run tests
+        run: node --test
+
+      - name: Build weather.json
+        run: node src/publish.js
+        env:
+          HOME_LAT: ${{ secrets.HOME_LAT }}
+          HOME_LON: ${{ secrets.HOME_LON }}
+          KMA_SERVICE_KEY: ${{ secrets.KMA_SERVICE_KEY }}
+          AIR_SERVICE_KEY: ${{ secrets.AIR_SERVICE_KEY }}
+          AIR_STATION: ${{ secrets.AIR_STATION }}
+          LOCATION_LABEL: ${{ secrets.LOCATION_LABEL }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
