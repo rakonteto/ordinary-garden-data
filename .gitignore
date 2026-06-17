@@ -3,5 +3,6 @@
 # Node
 node_modules/
 npm-debug.log*
-# 발행 산출물(로컬 테스트 시 생성) — Pages 아티팩트로만 배포, 추적 안 함
+# 발행 산출물: weather.json은 Pages 아티팩트로만 배포(추적 안 함).
+# plants.json은 repo에 커밋(weather 워크플로가 public/ 통째 올릴 때 함께 배포).
 public/weather.json

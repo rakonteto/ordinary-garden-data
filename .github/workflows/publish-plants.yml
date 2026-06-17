@@ -1,0 +1,43 @@
+name: Publish plants
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'   # 매월 1일 00:00 UTC (식물정보는 거의 불변)
+
+permissions:
+  contents: write          # plants.json 커밋·푸시
+
+concurrency:
+  group: publish-plants
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'   # 최신 LTS 핀 (weather의 Node20 deprecation 회피)
+
+      - name: Run tests
+        run: node --test
+
+      - name: Build plants.json
+        run: node src/publish-plants.js
+        env:
+          NONGSARO_SERVICE_KEY: ${{ secrets.NONGSARO_SERVICE_KEY }}
+
+      - name: Commit plants.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/plants.json
+          if git diff --staged --quiet; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git commit -m "data: plants.json 갱신 [skip ci]"
+            git push
+          fi
