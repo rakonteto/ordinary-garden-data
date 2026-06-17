@@ -7,6 +7,7 @@
   "engines": { "node": ">=20" },
   "scripts": {
     "test": "node --test",
-    "publish": "node src/publish.js"
+    "publish": "node src/publish.js",
+    "publish:plants": "node src/publish-plants.js"
   }
 }
