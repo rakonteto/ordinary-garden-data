@@ -37,7 +37,7 @@ export async function collectGarden(serviceKey, {
     }
   });
   const items = results.filter(Boolean);
-  if (missing.length) log.warn(`상세 실패/제외 ${missing.length}종: ${missing.map((m) => m.cntntsNo).join(',')}`);
+  if (missing.length) log.warn(`상세 실패/제외 ${missing.length}종: ${missing.map((m) => `${m.cntntsNo}(${m.reason})`).join(',')}`);
   return { items, missing };
 }
 

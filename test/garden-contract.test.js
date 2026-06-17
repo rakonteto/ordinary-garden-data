@@ -8,7 +8,7 @@ import { buildCatalog } from '../src/garden/build-catalog.js';
 const listXml = await readFile(new URL('./fixtures/garden-list.xml', import.meta.url), 'utf8');
 const detailXml = await readFile(new URL('./fixtures/garden-detail.xml', import.meta.url), 'utf8');
 
-const CATEGORIES = ['vegetable', 'herb', 'flower', 'fruit', 'foliage', 'other'];
+const CATEGORIES = ['flower', 'fruit', 'foliage', 'other']; // garden 생성값(vegetable·herb는 garden 분류에 없음)
 const LIGHTS = ['low', 'medium', 'high', null];
 const DIFFS = ['easy', 'medium', 'hard', null];
 
