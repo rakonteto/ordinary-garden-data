@@ -2,7 +2,7 @@ name: Publish weather
 
 on:
   schedule:
-    - cron: '*/10 * * * *'   # 10분마다 (GitHub 스케줄은 수 분 지연/스킵 가능 — 신선도 표기로 흡수)
+    - cron: '*/30 * * * *'   # 30분마다 (GitHub 스케줄은 수 분 지연/스킵 가능 — 신선도 표기로 흡수)
   workflow_dispatch:          # 수동/미래 강제 새로고침 훅 (v1 앱 연동은 아직 안 함)
 
 permissions:
